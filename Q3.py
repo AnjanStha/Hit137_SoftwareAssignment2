@@ -54,7 +54,7 @@ def Draw_tree(left_angle, right_angle, starting_lenght, branch_red, recursion_de
     t.setposition(pos)
     t.setheading(heading)
     t.pendown()
-    input("pase for draw....2... Enter to continue")
+    #input("pase for draw....2... Enter to continue")
 
 
     ## Draw right Branch
@@ -66,7 +66,7 @@ def Draw_tree(left_angle, right_angle, starting_lenght, branch_red, recursion_de
     t.setposition(pos)
     t.setheading(heading)
     t.pendown()
-    input("pase for draw....3... Enter to continue")
+    #input("pase for draw....3... Enter to continue")
 
 
 Draw_tree(left_angle, right_angle, starting_lenght, branch_red, 5)
