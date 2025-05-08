@@ -1,0 +1,6 @@
+Average Temperature For Each Season 
+
+Season: Summer, Temperature: 32.1 (°C)
+Season: Winter, Temperature: 21.1 (°C)
+Season: Autumn, Temperature: 27.3 (°C)
+Season: Spring, Temperature: 27.4 (°C)

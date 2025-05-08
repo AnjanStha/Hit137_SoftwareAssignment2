@@ -1,0 +1,3 @@
+Station with largest temperature range: 
+
+Station Name: WAGGA-WAGGA-AMO, Temperature: 21.1 (°C)
