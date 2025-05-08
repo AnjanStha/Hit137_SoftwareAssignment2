@@ -18,7 +18,6 @@ def merge_all_data():
                 try:
                     df = pd.read_csv(file_path)
                     df['YEAR'] = filename.split('_')[-1].split('.')[0]
-                    # print(df)
 
                     all_data.append(df)
                 
@@ -42,11 +41,7 @@ def cal_average_temp(data):
     if data.empty:
         return
     
-    # print(data)
-    
     try:
-        # if data:
-            # print(data)
         seasons = {
             'Summer' : ['December', 'January', 'February'],
             'Winter' : ['June', 'July', 'August'],
@@ -54,14 +49,10 @@ def cal_average_temp(data):
             'Spring' : ['September', 'October', 'November']
         }
 
-        # print(df)
 
         temp_text = 'Average Temperature For Each Season \n\n'
-        # temp_text = temp_text + f'Season'
 
         for season, months in seasons.items():
-            # print(df[months].mean())
-            # print(season,round(df[months].mean().mean(),2))
             avg_value = round(data[months].mean().mean(), 1)
             temp_text = temp_text + f'Season: {season}, Temperature: {avg_value} (°C)\n'
 
@@ -72,8 +63,6 @@ def cal_average_temp(data):
 
 
 data = merge_all_data()
-
-# cal_average_temp(data)
 
 def find_temp_range(data):
     if data.empty:
@@ -89,9 +78,6 @@ def find_temp_range(data):
         station = data.loc[data['TEMP_RANGE'].idxmax()]
         
         range_text = range_text + f'Station with largest temperature range: \n\n'
-
-        # print("Station with the largest temperature range:")
-        # print(max_range_station[['STATION_NAME', 'tep', 'Year']])
 
         range_text = range_text + f"Station Name: {station['STATION_NAME']}, Temperature: {round(station['TEMP_RANGE'], 1)} (°C)"
 

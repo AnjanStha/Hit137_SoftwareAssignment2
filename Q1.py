@@ -18,7 +18,7 @@ def check_input(user_input):
         if user_input.isdigit():
             return int(user_input)
         
-        # converting float to int
+        # converting float to int, strip the decimal part
         float_number = float(user_input)
         int_number = int(round(float_number, 0))
 
