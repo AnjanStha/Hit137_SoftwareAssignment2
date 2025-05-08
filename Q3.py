@@ -29,22 +29,18 @@ def Draw_tree(t,left_angle, right_angle, starting_lenght, branch_red, recursion_
     heading = t.heading()
 
     # Draw left branch
-    ##new_value = ((value - old_min) / (old_max - old_min)) * (new_max - new_min) + new_min 
     ## tree_width calculate the width of the branch to reduce width for child branch
     tree_width = round(((starting_lenght - 1) / ( mainBranch_lenght - 1)) * 0.9 + 0.1, 2)
 
     t.pensize(5*tree_width)
     t.left(left_angle)
     Draw_tree(t,left_angle, right_angle, starting_lenght * branch_red, branch_red, recursion_depth -1, False,mainBranch_lenght)
-    #input("pase for draw....1... Enter to continue")
 
     ## return to postion heading
     t.penup()
     t.setposition(pos)
     t.setheading(heading)
     t.pendown()
-    #input("pase for draw....2... Enter to continue")
-
 
     ## Draw right Branch
     ## calculate width of the branch 
@@ -59,7 +55,6 @@ def Draw_tree(t,left_angle, right_angle, starting_lenght, branch_red, recursion_
     t.setposition(pos)
     t.setheading(heading)
     t.pendown()
-    #input("pase for draw....3... Enter to continue")
 
 ## input function for check user input
 def check_input(message,min, max = None):
@@ -79,7 +74,7 @@ def main():
         left_angle = check_input("Please enter left angle of Tree ",1, 360)
         right_angle = check_input("Please enter right angle of Tree ",1,360)
         starting_lenght = check_input("Please enter starting Branch length ",1)
-        branch_red = check_input("Please enter the branch lenght reduction factor in Percentage % (70) ",1, 100)
+        branch_red = check_input("Please enter the branch length reduction factor in Percentage % (70) ",1, 100)
         recursion_depth = check_input("Please enter Recursion depth of the Tree ",1)
         branch_red /= 100
 
