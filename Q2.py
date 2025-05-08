@@ -17,7 +17,7 @@ def merge_all_data():
                 file_path = os.path.join(file_directory, filename)
                 try:
                     df = pd.read_csv(file_path)
-                    df['Year'] = filename.split('_')[-1].split('.')[0]
+                    df['YEAR'] = filename.split('_')[-1].split('.')[0]
                     # print(df)
 
                     all_data.append(df)
@@ -80,12 +80,28 @@ def find_temp_range(data):
         return
     
     try:
-        print(data)
-        print(data['STATION_NAME'])
-
+        range_text = ''
+        months = ['January', 'February', 'March', 'April', 'May', 'June',
+              'July', 'August', 'September', 'October', 'November', 'December']
+            
+        data['TEMP_RANGE'] = data[months].max(axis=1) - data[months].min(axis=1)
     
+        station = data.loc[data['TEMP_RANGE'].idxmax()]
+        
+        range_text = range_text + f'Station with largest temperature range: \n\n'
+
+        # print("Station with the largest temperature range:")
+        # print(max_range_station[['STATION_NAME', 'tep', 'Year']])
+
+        range_text = range_text + f"Station Name: {station['STATION_NAME']}, Temperature: {round(station['TEMP_RANGE'], 1)} (°C)"
+
+        save_to_file(range_text, 'largest_temp_range_station.txt')
+
+    except ValueError:
+        print('No Data Found')
+
     except Exception as er:
         raise er
 
-find_temp_range(data)
+
 
