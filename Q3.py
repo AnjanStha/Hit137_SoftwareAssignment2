@@ -11,32 +11,16 @@
 # branch out 5 times.
 
 import turtle
-### setup parameters
-# t = turtle
-# s = turtle.Screen()
-# s.title("Tree Pattern")
-# s.bgcolor("White")
-# s.screensize(800,500)
-# t.pencolor("green")
-# t.pensize(3)
-# t.penup()  ## lift the pen up and doest not draw
-# t.goto(0, -200)  # move pen to buttom
-# t.left(90)
-# t.pendown()
-
-
-# #### parameters for user input
-# left_angle = 20     # left angle
-# right_angle = 25   #right angle
-# starting_lenght = 100  #starting branch lenght
-# branch_red = 0.7   #branch lenght reduction factor
-# #recursion_depth  = 5 # Recursion depth6
 
 # recursive function to draw tree
-def Draw_tree(t,left_angle, right_angle, starting_lenght, branch_red, recursion_depth):
+def Draw_tree(t,left_angle, right_angle, starting_lenght, branch_red, recursion_depth, base_flag, mainBranch_lenght):
 
     if recursion_depth == 0 or starting_lenght < 1:
+        t.penup()
         return
+    ## for base line branch show red color and for other show green color
+    t.pencolor("red" if base_flag else "green")
+    
    
     t.forward(starting_lenght)
     
@@ -45,8 +29,13 @@ def Draw_tree(t,left_angle, right_angle, starting_lenght, branch_red, recursion_
     heading = t.heading()
 
     # Draw left branch
+    ##new_value = ((value - old_min) / (old_max - old_min)) * (new_max - new_min) + new_min 
+    ## tree_width calculate the width of the branch to reduce width for child branch
+    tree_width = round(((starting_lenght - 1) / ( mainBranch_lenght - 1)) * 0.9 + 0.1, 2)
+
+    t.pensize(5*tree_width)
     t.left(left_angle)
-    Draw_tree(t,left_angle, right_angle, starting_lenght * branch_red, branch_red, recursion_depth -1)
+    Draw_tree(t,left_angle, right_angle, starting_lenght * branch_red, branch_red, recursion_depth -1, False,mainBranch_lenght)
     #input("pase for draw....1... Enter to continue")
 
     ## return to postion heading
@@ -58,8 +47,12 @@ def Draw_tree(t,left_angle, right_angle, starting_lenght, branch_red, recursion_
 
 
     ## Draw right Branch
+    ## calculate width of the branch 
+    ## mianBranch_length is main orginal length of the base branch
+    tree_width = round(((starting_lenght - 1) / ( mainBranch_lenght - 1)) * 0.9 + 0.1, 2)
+    t.pensize(5*tree_width)
     t.right(right_angle)
-    Draw_tree(t,left_angle, right_angle, starting_lenght * branch_red, branch_red, recursion_depth -1)
+    Draw_tree(t,left_angle, right_angle, starting_lenght * branch_red, branch_red, recursion_depth -1, False,mainBranch_lenght)
 
      ## return to postion heading
     t.penup()
@@ -68,7 +61,7 @@ def Draw_tree(t,left_angle, right_angle, starting_lenght, branch_red, recursion_
     t.pendown()
     #input("pase for draw....3... Enter to continue")
 
-## input function for check 
+## input function for check user input
 def check_input(message,min, max = None):
     try:
         input_value = float(input(message))
@@ -83,28 +76,29 @@ def check_input(message,min, max = None):
 def main():
 
     try:
-        left_angle = check_input("Please enter left angle of Tree ",1, 180)
-        right_angle = check_input("Please enter right angle of Tree ",1,180)
+        left_angle = check_input("Please enter left angle of Tree ",1, 360)
+        right_angle = check_input("Please enter right angle of Tree ",1,360)
         starting_lenght = check_input("Please enter starting Branch length ",1)
         branch_red = check_input("Please enter the branch lenght reduction factor in Percentage % (70) ",1, 100)
         recursion_depth = check_input("Please enter Recursion depth of the Tree ",1)
         branch_red /= 100
 
-        ### setup parameters45
+        ### setup parameters
         t = turtle
         s = turtle.Screen()
         s.title("Tree Pattern")
         s.bgcolor("White")
         s.screensize(800,500)
         t.pencolor("green")
-        t.pensize(3)
+        t.pensize(5) ### pen size or thickness
         t.penup()  ## lift the pen up and doest not draw
         t.goto(0, -200)  # move pen to buttom
         t.left(90)
         t.pendown()
 
         ## Call recursive function to draw tree
-        Draw_tree(t,left_angle, right_angle, starting_lenght, branch_red, recursion_depth)
+        Draw_tree(t,left_angle, right_angle, starting_lenght, branch_red, recursion_depth, True,starting_lenght)
+        t.hideturtle() ## hide turtle arrow at the end 
         turtle.done()
     except ValueError:
          print("Invalid input please enter value again")
