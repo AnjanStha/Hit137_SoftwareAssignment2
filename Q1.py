@@ -53,14 +53,14 @@ def text_encryption(msg, first_key, second_key):
 
                 to_shift = first_key
                 # shift backward by first entered key
-                enc_text = enc_text + chr(((ord(ch) - ord('A') - to_shift) % 26) + ord('A'))
+                enc_text = enc_text + chr(((ord(ch) - ord('A') - to_shift) % 13) + ord('A'))
 
             # ch is/between upper case N and Z
             elif ord(ch) >= ord('N') and ord(ch) <= ord('Z'):
 
                 to_shift = second_key ** 2
                 # shift forward 
-                enc_text = enc_text + chr(((ord(ch) - ord('A') + to_shift ) % 26) + ord('A'))
+                enc_text = enc_text + chr(((ord(ch) - ord('N') + to_shift) % 13) + ord('N'))
 
         # check single character is lower case
         elif ch.islower():
@@ -68,19 +68,69 @@ def text_encryption(msg, first_key, second_key):
             if ord(ch) >= ord('a') and ord(ch) <= ord('m'):
 
                 to_shift = first_key * second_key
-                enc_text = enc_text + chr(((ord(ch) - ord('a') + to_shift) % 26) + ord('a'))
+                enc_text = enc_text + chr(((ord(ch) - ord('a') + to_shift) % 13) + ord('a'))
 
             # ch is/between lower case n and m
             elif ord(ch) >= ord('n') and ord(ch) <= ord('z'):
 
                 to_shift = first_key + second_key
-                enc_text = enc_text + chr(((ord(ch) - ord('a') - to_shift) % 26) + ord('a'))
+                enc_text = enc_text + chr(((ord(ch) - ord('n') - to_shift) % 13) + ord('n'))
 
         # space, commas, point as it is in original text
         else:
             enc_text = enc_text + ch
         
     return enc_text
+
+
+def decrypt_text(msg, first_key, second_key):
+    dec_text = ''
+    to_shift = 0
+
+    for ch in msg:
+        # check single character is upper case
+        if ch.isupper():
+            # ch is/between upper case A and M
+            if ord(ch) >= ord('A') and ord(ch) <= ord('M'):
+
+                to_shift = first_key
+                # shift forward by first entered key
+                dec_text = dec_text + chr(((ord(ch) - ord('A') + to_shift) % 13) + ord('A'))
+
+            # ch is/between upper case N and Z
+            elif ord(ch) >= ord('N') and ord(ch) <= ord('Z'):
+
+                to_shift = second_key ** 2
+                # shift backward 
+                dec_text = dec_text + chr(((ord(ch) - ord('N') - to_shift) % 13) + ord('N'))
+
+        # check single character is lower case
+        elif ch.islower():
+            # ch is/between lower case a and m
+            if ord(ch) >= ord('a') and ord(ch) <= ord('m'):
+
+                to_shift = first_key * second_key
+                dec_text = dec_text + chr(((ord(ch) - ord('a') - to_shift) % 13) + ord('a'))
+
+            # ch is/between lower case n and m
+            elif ord(ch) >= ord('n') and ord(ch) <= ord('z'):
+
+                to_shift = first_key + second_key
+                dec_text = dec_text + chr(((ord(ch) - ord('n') + to_shift) % 13) + ord('n'))
+
+        # space, commas, point as it is in original text
+        else:
+            dec_text = dec_text + ch
+        
+    return dec_text
+
+def verify_encrypted_text(original_text, encrypted_text):
+    # check if original text is same as encrypted text
+    if original_text == encrypted_text:
+        print('Encrypted text is same as original text')
+    else:
+        print('Encrypted text is not same as original text')
+        
 
 def main():
     data = None
@@ -103,6 +153,18 @@ def main():
                 print(f'\nWriting encrypted text to \'encrypted_text.txt\'')
                 file.write(text_to_write)
                 print(f'Done..')
+                
+            # creating decrypted_text.txt and writing decrypted text
+            with open('decrypted_text.txt', 'w+') as file:
+                decrypted_text = decrypt_text(text_to_write, first_key, second_key)
+                # writing decrypted text to file
+                file.write(decrypted_text)
+                print(f'Writing decrypted text to \'decrypted_text.txt\'')
+                print(f'Done..')     
+                
+            # verifying if original text is same as decrypted text
+            verify_encrypted_text(data, decrypted_text)
+
 
     except Exception as error:
         raise error
