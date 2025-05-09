@@ -1,0 +1,4 @@
+Warmest and Coolest Station 
+
+Warmest Station Name: MARBLE-BAR, Temperature: 41.5 (°C)
+Coolest Station Name: CABRAMURRA-SMHEA-AWS, Temperature: 12.4 (°C)
