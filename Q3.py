@@ -57,9 +57,13 @@ def Draw_tree(t,left_angle, right_angle, starting_lenght, branch_red, recursion_
     t.pendown()
 
 ## input function for check user input
-def check_input(message,min, max = None):
+def check_input(message,min, max = None, default = None):
     try:
-        input_value = float(input(message))
+        input_value = input(message)
+        if input_value == "":
+            if default is not None:
+                return default
+        input_value = float(input_value)
         if(input_value >= min and ( max is None or input_value <= max)):
             return input_value
         else:
@@ -71,11 +75,12 @@ def check_input(message,min, max = None):
 def main():
 
     try:
-        left_angle = check_input("Please enter left angle of Tree ",1, 360)
-        right_angle = check_input("Please enter right angle of Tree ",1,360)
-        starting_lenght = check_input("Please enter starting Branch length ",1)
-        branch_red = check_input("Please enter the branch length reduction factor in Percentage % (70) ",1, 100)
-        recursion_depth = check_input("Please enter Recursion depth of the Tree ",1)
+        print("Pressure Enter to use default value")
+        left_angle = check_input("Please enter left angle of Tree (default: 20): ", 1, 360, 20)
+        right_angle = check_input("Please enter right angle of Tree (default: 25): ", 1, 360, 25)
+        starting_lenght = check_input("Please enter starting Branch length (default: 100): ", 1, 1000, 100)
+        branch_red = check_input("Please enter the branch length reduction factor in Percentage % (default: 70): ", 1, 100, 70)
+        recursion_depth = check_input("Please enter Recursion depth of the Tree (default: 5): ", 1, 20, 5)
         branch_red /= 100
 
         ### setup parameters
